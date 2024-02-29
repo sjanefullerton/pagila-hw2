@@ -6,4 +6,4 @@
 select special_features, count(*) FROM (
     select unnest(special_features) as special_features from film)
 GROUP BY special_features
-ORDER BY special_features;
+ORDER BY special_features ASC;
