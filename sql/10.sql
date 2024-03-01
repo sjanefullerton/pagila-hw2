@@ -15,8 +15,8 @@ JOIN inventory USING (film_id)
 JOIN rental USING (inventory_id)
 JOIN payment USING (rental_id)
 JOIN (select film_id, unnest(special_features) as special_feature from film) as t on film.film_id = t.film_id
-group by special feature
-order by special feature;
+group by special_feature
+order by special_feature;
 
 
 

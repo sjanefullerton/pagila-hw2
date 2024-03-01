@@ -16,8 +16,9 @@ select rank, title, revenue, sum(revenue) over (order by rank) as "total revenue
         LEFT JOIN inventory USING (film_id)
         LEFT JOIN rental USING (inventory_id)
         LEFT JOIN payment USING (rental_id)
-        group by film.title) as subquery
-) as outer
+        group by film.title
+    ) as subquery
+) as outerquery
 order by revenue desc, title;
 
 
