@@ -9,5 +9,4 @@ left join customer using (customer_id)
 left join address using (address_id)
 left join city using (city_id)
 left join country using (country_id) WHERE country = 'United States'
-where film_id IS NULL
 order by title;
