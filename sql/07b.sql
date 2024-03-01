@@ -3,10 +3,10 @@
  * but instead of using the NOT IN operator, you are to use a LEFT JOIN.
  */
 
-select distinct(title) from film JOIN inventory USING (film_id)
-left join rental using (film_id)
+select title from film JOIN inventory USING (film_id)
+left join rental using (indentory_id)
 left join customer using (customer_id)
 left join address using (address_id)
 left join city using (city_id)
-left join country using (country_id) WHERE country = 'United States'
+group by title
 order by title;
