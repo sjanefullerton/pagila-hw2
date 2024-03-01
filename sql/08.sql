@@ -6,7 +6,9 @@
  * Use `unnest(special_features)` in a subquery.
  */
 
-select title from (select title, rating, unnest(special_features) as feature from film) 
-where rating = 'G' and feature = 'Trailers'
-order by title;
+select title from
+(select title, unnest(special_features)as feature, rating from film)
+where feature = 'Trailers' and rating = 'G' 
+order by title asc;
+
 
