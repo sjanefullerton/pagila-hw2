@@ -9,20 +9,25 @@
  */
 
 
-select rank, title, revenue, "total revenue", to_char(100*"total revenue"/(select sum(amount) from film LEFT JOIN inventory USING (film_id) LEFT JOIN rental USING (inventory_id) LEFT JOIN payment USING (rental_id)), 'FM900.00') as "percent revenue"
-from (select rank, title revenue, sum(revenue) over (order by revenue desc) as "total revenue" from(select rank() over (order by COALESCE(sum(payment.amount), 0.00) desc) as rank, film.title, COALESCE(sum(payment.amount), 0.00) as revenue from film
-        LEFT JOIN inventory USING (film_id)
-        LEFT JOIN rental USING (inventory_id)
-        LEFT JOIN payment USING (rental_id)
-        group by film.title
-        order by revenue desc) as first group by rank, title, revenue order by rank, title) as second
-group by rank, title, revenue, "total revenue";
 
 
 
 
 
-
+select rank, title, revenue, "total revenue", TO_CHAR((100*"total revenue")/sum(revenue) OVER (), 'FM900.00') AS "percent revenue" from (
+    select rank, title, revenue, sum(revenue) over (order by revenue desc) as "total revenue"
+    from (
+        select RANK () OVER (order by COALESCE("sum", 0.00) DESC) as rank, title, COALESCE("sum", 0.00) as revenue
+        from (
+            select film.title, sum(payment.amount) from film
+            LEFT JOIN inventory USING (film_id)
+            LEFT JOIN rental USING (inventory_id)
+            LEFT JOIN payment USING (rental_id)
+            group by title
+        ) first_sub
+       ) second_sub
+) th_sub
+order by revenue desc, title;
 
 
 
