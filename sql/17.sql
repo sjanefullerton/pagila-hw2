@@ -9,11 +9,17 @@
  * <https://stackoverflow.com/a/5700744>.
  */
 
-select RANK() OVER (order by COALESCE(sum(payment.amount), 0.00)) as rank, title, COALESCE(sum(payment.amount), 0.00)) OVER (order by COALESCE(sum(payment.amount), 0.00)) as "total revenue" from film
-LEFT JOIN inventory USING (film_id)
-LEFT JOIN rental USING (inventory_id)
-LEFT JOIN payment USING (rental_id)
-group by title
-order by rank, title;
+select rank, title, revenue, sum(revenue) over (order by rank) as "total revenue" from (
+    select RANK() OVER (ORDER BY revenue DESC) as rank, title, revenue from(
+        select film.title,
+        COALESCE(SUM(payment.amount), 0.00) as revenue from film
+        LEFT JOIN inventory USING (film_id)
+        LEFT JOIN rental USING (inventory_id)
+        LEFT JOIN payment USING (rental_id)
+        group by film.title) as subquery
+) as outer
+order by revenue desc, title;
+
+
 
 
