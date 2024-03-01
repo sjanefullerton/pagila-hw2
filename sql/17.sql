@@ -9,13 +9,10 @@
  * <https://stackoverflow.com/a/5700744>.
  */
 
-select rank, title, revenue, sum(revenue) over (order by revenue desc) as "total revenue"
-from (
-    select RANK() OVER(COALESCE(sum(payment.amount), 0.00) DESC) as rank, title, COALESCE(sum(payment.amount), 0.00) as revenue from film
-    LEFT JOIN inventory USING (film_id)
-    LEFT JOIN rental USING (inventory_id)
-    LEFT JOIN payment USING (rental_id)
-) as ranks
+select RANK() OVER (order by COALESCE(sum(payment.amount), 0.00) DESC) as rank, title, COALESCE(sum(payment.amount), 0.00)) OVER (order by COALESCE(sum(payment.amount), 0.00) DESC) as "total revenue" from film
+LEFT JOIN inventory USING (film_id)
+LEFT JOIN rental USING (inventory_id)
+LEFT JOIN payment USING (rental_id)
 group by title
 order by rank, title;
 
