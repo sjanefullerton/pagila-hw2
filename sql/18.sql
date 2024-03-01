@@ -12,7 +12,7 @@ select rank, title, revenue,
 SUM(revenue) OVER (order by rank asc) as "total revenue", 
 to_char(100 * SUM(revenue) OVER (order by rank asc) / SUM(revenue) OVER (), 'FM900.00') as "percent revenue"
 from (
-    select RANK() OVER (order by COALESCE(SUM(amount), 0.00), desc) as rank,
+    select RANK() OVER (order by COALESCE(SUM(amount), 0.00)) as rank,
     title,
     COALESCE(SUM(amount), 0.00) as revenue
     from film

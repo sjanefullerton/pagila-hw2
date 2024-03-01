@@ -9,7 +9,7 @@
  * <https://stackoverflow.com/a/5700744>.
  */
 
-select RANK() OVER (order by COALESCE(sum(payment.amount), 0.00) DESC) as rank, title, COALESCE(sum(payment.amount), 0.00)) OVER (order by COALESCE(sum(payment.amount), 0.00) DESC) as "total revenue" from film
+select RANK() OVER (order by COALESCE(sum(payment.amount), 0.00)) as rank, title, COALESCE(sum(payment.amount), 0.00)) OVER (order by COALESCE(sum(payment.amount), 0.00)) as "total revenue" from film
 LEFT JOIN inventory USING (film_id)
 LEFT JOIN rental USING (inventory_id)
 LEFT JOIN payment USING (rental_id)
