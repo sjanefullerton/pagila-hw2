@@ -11,6 +11,6 @@ LEFT JOIN (select distinct country, film_id from film
     JOIN address USING (address_id)
     JOIN city USING (city_id)
     JOIN country USING (country_id) where country ilike 'United States'
-) USING (film_id) where country is NULL
+) t USING (film_id) where country is NULL
 order by film.title;
 
