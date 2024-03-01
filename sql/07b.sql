@@ -14,6 +14,6 @@ LEFT JOIN (
     JOIN city USING (city_id)
     JOIN country USING (country_id) WHERE country ILIKE 'United States'
 ) t USING (film_id)
-where country is NULL
+where country.country is NULL
 order by film.title;
 
