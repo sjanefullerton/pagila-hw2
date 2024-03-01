@@ -11,9 +11,14 @@
 */
 
 
+
 select special_feature, profit from(select unnest(special_features) as special_feature, sum(amount) as profit from film
-    join inventory using (film_id)
-    join rental using (inventory_id)
-    join payment using (rental_id) group by special_feature order by profit desc)
+    JOIN inventory USING (film_id)
+    JOIN rental USING (inventory_id)
+    JOIN payment USING (rental_id) 
+    group by special_feature order by profit desc)
 group by special_feature
 order by special_feature;
+
+
+
