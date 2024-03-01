@@ -4,7 +4,7 @@
  */
 
 select title from film JOIN inventory USING (film_id)
-left join rental using (indentory_id)
+left join rental using (inventory_id)
 left join customer using (customer_id)
 left join address using (address_id)
 left join city using (city_id)

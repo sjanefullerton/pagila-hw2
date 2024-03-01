@@ -8,6 +8,6 @@
 
 
 select title from film where rating = 'G' and 'Trailers' in (
-    select unnest(special_features) as p from film where p.film_id = film.film_id)
+    select unnest(special_features) from film as p  where p.film_id = film.film_id)
 order by title asc;
 
