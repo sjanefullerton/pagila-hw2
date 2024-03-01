@@ -10,7 +10,7 @@
  * Use this query as a subquery in a select statement similar to answer to the previous problem.
 */
 
-select special_feature, sum(profits) as profit from (
+select special_feature, sum(payment.amount) as profit from (
     select film.film_id, unnest(film.special_features) as special_feature, sum(payment.amount) from film
     JOIN inventory USING (film_id)
     JOIN rental USING (inventory_id)
