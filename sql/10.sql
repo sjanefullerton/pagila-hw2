@@ -15,7 +15,7 @@ select special_feature, sum(payment.amount) as profit from (
     JOIN inventory USING (film_id)
     JOIN rental USING (inventory_id)
     JOIN payment USING (rental_id)
-    group by film.film_id, special feature) as yes
+    group by film.film_id, special_feature) as yes
 group by yes.special_feature
 order by special_feature;
 
