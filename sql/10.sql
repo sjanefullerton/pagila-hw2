@@ -10,13 +10,13 @@
  * Use this query as a subquery in a select statement similar to answer to the previous problem.
 */
 
-select special_feature, sum(payment.amount) as profit from (
+select special_feature, sum(profits) as profit from (
     select film.film_id, unnest(film.special_features) as special_feature, sum(payment.amount) from film
     JOIN inventory USING (film_id)
     JOIN rental USING (inventory_id)
     JOIN payment USING (rental_id)
-    group by film.film_id, special_feature) as yes
-group by yes.special_feature
+    group by film.film_id, special_feature) as tab
+group by tab.special_feature
 order by special_feature;
 
 
